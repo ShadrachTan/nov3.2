@@ -61,7 +61,7 @@ require_once 'core/models.php';
                             <td>
                                 <li><a class="links" href="viewprojects.php?developer_id=<?php echo $row['developer_id']; ?>">View Projects</a></li>
                                 <li><a class="links" href="editwebdev.php?developer_id=<?php echo $row['developer_id']; ?>">Edit</a></li>
-                                <li><a class="links" href="deletedeveloper.php?developer_id=<?php echo $row['developer_id']; ?>">Delete</a></li>
+                                <li><a class="links" href="deletewebdev.php?developer_id=<?php echo $row['developer_id']; ?>">Delete</a></li>
                             </td>
                         </tr>
                     <?php } ?>
