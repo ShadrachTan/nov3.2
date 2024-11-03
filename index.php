@@ -60,7 +60,7 @@ require_once 'core/models.php';
                             <td>$<?php echo number_format($row['hourly_rate'], 2); ?></td>
                             <td>
                                 <li><a class="links" href="viewprojects.php?developer_id=<?php echo $row['developer_id']; ?>">View Projects</a></li>
-                                <li><a class="links" href="editdeveloper.php?developer_id=<?php echo $row['developer_id']; ?>">Edit</a></li>
+                                <li><a class="links" href="editwebdev.php?developer_id=<?php echo $row['developer_id']; ?>">Edit</a></li>
                                 <li><a class="links" href="deletedeveloper.php?developer_id=<?php echo $row['developer_id']; ?>">Delete</a></li>
                             </td>
                         </tr>

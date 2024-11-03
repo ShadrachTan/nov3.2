@@ -14,6 +14,16 @@ function insertDeveloper($pdo, $name, $email, $expertise, $hourly_rate)
     }
 }
 
+// Function to retrieve a specific developer's details by their ID
+function getDeveloperID($pdo, $developer_id)
+{
+    $stmt = $pdo->prepare("SELECT * FROM developers WHERE developer_id = :developer_id");
+    $stmt->execute(['developer_id' => $developer_id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+
+
 // Function to update an existing developer's details in the Developers table
 function updateDeveloper($pdo, $name, $email, $expertise, $hourly_rate, $developer_id)
 {
