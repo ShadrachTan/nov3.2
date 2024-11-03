@@ -1,7 +1,8 @@
 <?php
 
 // Function to insert a new developer into the Developers table
-function insertDeveloper($pdo, $name, $email, $expertise, $hourly_rate) {
+function insertDeveloper($pdo, $name, $email, $expertise, $hourly_rate)
+{
     $sql = "INSERT INTO Developers (name, email, expertise, hourly_rate) VALUES (?, ?, ?, ?)";
     $stmt = $pdo->prepare($sql);
     try {
@@ -14,7 +15,8 @@ function insertDeveloper($pdo, $name, $email, $expertise, $hourly_rate) {
 }
 
 // Function to update an existing developer's details in the Developers table
-function updateDeveloper($pdo, $name, $email, $expertise, $hourly_rate, $developer_id) {
+function updateDeveloper($pdo, $name, $email, $expertise, $hourly_rate, $developer_id)
+{
     $sql = "UPDATE Developers SET name = ?, email = ?, expertise = ?, hourly_rate = ? WHERE developer_id = ?";
     $stmt = $pdo->prepare($sql);
     try {
@@ -27,7 +29,8 @@ function updateDeveloper($pdo, $name, $email, $expertise, $hourly_rate, $develop
 }
 
 // Function to delete a developer and their associated projects from the database
-function deleteDeveloper($pdo, $developer_id) {
+function deleteDeveloper($pdo, $developer_id)
+{
     $sql = "DELETE FROM Developers WHERE developer_id = ?";
     $stmt = $pdo->prepare($sql);
     try {
@@ -40,7 +43,8 @@ function deleteDeveloper($pdo, $developer_id) {
 }
 
 // Function to retrieve all developers from the Developers table
-function getAllDevelopers($pdo) {
+function getAllDevelopers($pdo)
+{
     $sql = "SELECT * FROM Developers";
     try {
         $stmt = $pdo->query($sql);
@@ -52,15 +56,16 @@ function getAllDevelopers($pdo) {
 }
 
 // Function to retrieve a specific developer's details by their ID
-function getDeveloperByID($pdo, $developer_id) {
-    $sql = "SELECT * FROM Developers WHERE developer_id = ?";
-    $stmt = $pdo->prepare($sql);
+function getDeveloperById($pdo, $developer_id)
+{
+    $stmt = $pdo->prepare("SELECT * FROM developers WHERE developer_id = ?");
     $stmt->execute([$developer_id]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 // Function to retrieve all projects associated with a specific developer
-function getProjectsByDeveloper($pdo, $developer_id) {
+function getProjectsByDeveloper($pdo, $developer_id)
+{
     $sql = "SELECT * FROM Projects WHERE developer_id = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$developer_id]);
@@ -68,7 +73,8 @@ function getProjectsByDeveloper($pdo, $developer_id) {
 }
 
 // Function to insert a new project into the Projects table
-function insertProject($pdo, $project_name, $start_date, $end_date, $budget, $developer_id, $status = 'Pending') {
+function insertProject($pdo, $project_name, $start_date, $end_date, $budget, $developer_id, $status = 'Pending')
+{
     $sql = "INSERT INTO Projects (project_name, start_date, end_date, budget, developer_id, status) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $pdo->prepare($sql);
     try {
@@ -81,7 +87,8 @@ function insertProject($pdo, $project_name, $start_date, $end_date, $budget, $de
 }
 
 // Function to update an existing project's details in the Projects table
-function updateProject($pdo, $project_name, $start_date, $end_date, $budget, $status, $project_id) {
+function updateProject($pdo, $project_name, $start_date, $end_date, $budget, $status, $project_id)
+{
     $sql = "UPDATE Projects SET project_name = ?, start_date = ?, end_date = ?, budget = ?, status = ? WHERE project_id = ?";
     $stmt = $pdo->prepare($sql);
     try {
@@ -94,7 +101,8 @@ function updateProject($pdo, $project_name, $start_date, $end_date, $budget, $st
 }
 
 // Function to delete a specific project from the Projects table
-function deleteProject($pdo, $project_id) {
+function deleteProject($pdo, $project_id)
+{
     $sql = "DELETE FROM Projects WHERE project_id = ?";
     $stmt = $pdo->prepare($sql);
     try {
@@ -107,10 +115,10 @@ function deleteProject($pdo, $project_id) {
 }
 
 // Function to retrieve a specific project's details by its ID
-function getProjectByID($pdo, $project_id) {
+function getProjectByID($pdo, $project_id)
+{
     $sql = "SELECT * FROM Projects WHERE project_id = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$project_id]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
-?>

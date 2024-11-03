@@ -1,45 +1,67 @@
-<?php require_once 'core/dbConfig.php'; ?>
-<?php require_once 'core/models.php'; ?>
+<?php
+require_once 'core/dbConfig.php';
+require_once 'core/models.php';
+
+// Get the developer ID (assuming it's set via a GET parameter or a predefined value)
+$developer_id = isset($_GET['developer_id']) ? $_GET['developer_id'] : null;
+
+// Fetch developer details
+$developer = getDeveloperById($pdo, $developer_id);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Project Management</title>
 	<link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 	<a href="index.php">Return to home</a>
 
-	<?php
-	if (!isset($_GET['web_dev_id']) || empty($_GET['web_dev_id'])) {
-		echo "<p>Error: Web Developer ID is missing. Please provide a valid ID.</p>";
-		exit; // Stop script execution
-	}
+	<!-- Display the developer's name in an H1 -->
+	<?php if ($developer): ?>
+		<h1>Welcome, <?php echo htmlspecialchars($developer['name']); ?></h1>
+	<?php else: ?>
+		<h1>Developer not found</h1>
+	<?php endif; ?>
 
-	$web_dev_id = htmlspecialchars($_GET['web_dev_id']);
-	$getAllInfoByWebDevID = getDeveloperByID($pdo, $web_dev_id);
+	<h2>Add New Project</h2>
+	<form action="core/handleForms.php?developer_id=<?php echo $developer_id; ?>" method="POST">
+		<input type="hidden" name="developer_id" value="<?php echo $developer_id; ?>">
 
-	if (!$getAllInfoByWebDevID) {
-		echo "<p>Error: Developer not found.</p>";
-		exit; // Stop script execution if developer not found
-	}
-	?>
-
-	<h1>Username: <?php echo $getAllInfoByWebDevID['name']; ?></h1>
-	<h1>Add New Project</h1>
-	<form action="core/handleForms.php?web_dev_id=<?php echo $web_dev_id; ?>" method="POST">
 		<p>
-			<input type="hidden" name="web_dev_id" value="<?php echo $web_dev_id; ?>">
+			<label for="projectName">Project Name</label>
+			<input type="text" name="projectName" id="projectName" required>
 		</p>
 		<p>
-			<label for="projectName">Project Name</label> 
-			<input type="text" name="projectName" required>
+			<label for="technologiesUsed">Technologies Used</label>
+			<input type="text" name="technologiesUsed" id="technologiesUsed" required>
 		</p>
 		<p>
-			<label for="technologiesUsed">Technologies Used</label> 
-			<input type="text" name="technologiesUsed" required>
+			<label for="startDate">Start Date</label>
+			<input type="date" name="startDate" id="startDate" required>
+		</p>
+		<p>
+			<label for="endDate">End Date</label>
+			<input type="date" name="endDate">
+		</p>
+		<p>
+			<label for="budget">Budget</label>
+			<input type="number" name="budget" id="budget" step="0.01" required>
+		</p>
+		<p>
+			<label for="status">Status</label>
+			<select name="status" id="status" required>
+				<option value="Not Started">Not Started</option>
+				<option value="In Progress">In Progress</option>
+				<option value="Completed">Completed</option>
+			</select>
+		</p>
+		<p>
 			<input type="submit" name="insertNewProjectBtn" value="Add Project">
 		</p>
 	</form>
@@ -54,22 +76,22 @@
 			<th>Status</th>
 			<th>Action</th>
 		</tr>
-		<?php $getProjectsByDeveloper = getProjectsByDeveloper($pdo, $web_dev_id); ?>
+		<?php $getProjectsByDeveloper = getProjectsByDeveloper($pdo, $developer_id); ?>
 		<?php foreach ($getProjectsByDeveloper as $row) { ?>
 			<tr>
-				<td><?php echo $row['project_id']; ?></td>
-				<td><?php echo $row['project_name']; ?></td>
-				<td><?php echo $row['start_date']; ?></td>
-				<td><?php echo $row['end_date']; ?></td>
-				<td><?php echo $row['budget']; ?></td>
-				<td><?php echo $row['status']; ?></td>
+				<td><?php echo htmlspecialchars($row['project_id']); ?></td>
+				<td><?php echo htmlspecialchars($row['project_name']); ?></td>
+				<td><?php echo htmlspecialchars($row['start_date']); ?></td>
+				<td><?php echo htmlspecialchars($row['end_date']); ?></td>
+				<td>$<?php echo number_format($row['budget'], 2); ?></td>
+				<td><?php echo htmlspecialchars($row['status']); ?></td>
 				<td>
-					<a href="editproject.php?project_id=<?php echo $row['project_id']; ?>&web_dev_id=<?php echo $web_dev_id; ?>">Edit</a>
-					<a href="deleteproject.php?project_id=<?php echo $row['project_id']; ?>&web_dev_id=<?php echo $web_dev_id; ?>">Delete</a>
+					<a href="editproject.php?project_id=<?php echo $row['project_id']; ?>&developer_id=<?php echo $developer_id; ?>">Edit</a>
+					<a href="deleteproject.php?project_id=<?php echo $row['project_id']; ?>&developer_id=<?php echo $developer_id; ?>">Delete</a>
 				</td>
 			</tr>
 		<?php } ?>
 	</table>
-
 </body>
+
 </html>
