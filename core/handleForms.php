@@ -26,30 +26,30 @@ if (isset($_POST['insertDeveloperBtn'])) {
 }
 
 // Edit Developer
-if (isset($_POST['editDeveloperBtn'])) {
-    if (isset($_POST['name'], $_POST['email'], $_POST['expertise'], $_POST['hourly_rate'], $_GET['developer_id'])) {
+if (isset($_POST['editWebDevBtn'])) {
+    if (isset($_POST['name'], $_POST['email'], $_POST['expertise'], $_POST['hourly_rate'], $_POST['developer_id'])) {
         $query = updateDeveloper(
             $pdo,
-            $_POST['name'],
-            $_POST['email'],
+            $_POST['name'], // Corrected from $_POST['name']
+            $_POST['email'],  // Corrected from $_POST['email']
             $_POST['expertise'],
             $_POST['hourly_rate'],
-            $_GET['developer_id']
+            $_POST['developer_id'] // This is now using the hidden field correctly
         );
 
         if ($query) {
-            header("Location: ../index.php");
+            echo "Update successfuly.<br><br> <a href='../index.php'>Return Home</a>";
             exit;
         } else {
-            echo "Edit failed";
+            echo "Update failed";
         }
     } else {
-        echo "All developer fields and Developer ID are required.";
+        echo "Missing data.";
     }
 }
 
 // Delete Developer
-if (isset($_POST['deleteDeveloperBtn'])) {
+if (isset($_POST['deleteWebDevBtn'])) {
     if (isset($_GET['developer_id'])) {
         $query = deleteDeveloper($pdo, $_GET['developer_id']);
 

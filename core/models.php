@@ -37,15 +37,25 @@ function updateDeveloper($pdo, $name, $email, $expertise, $hourly_rate, $develop
         return false; // Indicate failure
     }
 }
-
 // Function to delete a developer and their associated projects from the database
 function deleteDeveloper($pdo, $developer_id)
 {
-    $sql = "DELETE FROM Developers WHERE developer_id = ?";
-    $stmt = $pdo->prepare($sql);
+    $pdo->beginTransaction(); // Begin a transaction
     try {
-        return $stmt->execute([$developer_id]);
+        // Delete all projects associated with the developer
+        $sql = "DELETE FROM Projects WHERE developer_id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$developer_id]);
+
+        // Delete the developer
+        $sql = "DELETE FROM Developers WHERE developer_id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$developer_id]);
+
+        $pdo->commit(); // Commit the transaction
+        return true; // Indicate success
     } catch (PDOException $e) {
+        $pdo->rollBack(); // Roll back the transaction
         // Log error or handle it as needed
         echo "Error deleting developer: " . $e->getMessage();
         return false; // Indicate failure

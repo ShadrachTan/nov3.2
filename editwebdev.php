@@ -22,14 +22,16 @@
 	?>
 
 	<h1>Edit Developer</h1>
-	<form action="core/handleForms.php?developer_id=<?php echo htmlspecialchars($_GET['developer_id']); ?>" method="POST">
+	<form action="core/handleForms.php" method="POST"> <!-- Action points to handleForms.php -->
+		<input type="hidden" name="developer_id" value="<?php echo $getDeveloperID['developer_id']; ?>">
+
 		<p>
-			<label for="firstName">Name</label>
-			<input type="text" name="firstName" value="<?php echo htmlspecialchars($getDeveloperID['name']); ?>" required>
+			<label for="name">Name</label>
+			<input type="text" name="name" value="<?php echo htmlspecialchars($getDeveloperID['name']); ?>" required>
 		</p>
 		<p>
-			<label for="lastName">Email</label>
-			<input type="text" name="lastName" value="<?php echo htmlspecialchars($getDeveloperID['email']); ?>" required>
+			<label for="email">Email</label>
+			<input type="text" name="email" value="<?php echo htmlspecialchars($getDeveloperID['email']); ?>" required>
 		</p>
 		<p>
 			<label for="expertise">Expertise</label>
