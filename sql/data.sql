@@ -8,11 +8,12 @@ CREATE TABLE Developers (
 
 CREATE TABLE Projects (
     project_id INT PRIMARY KEY AUTO_INCREMENT,
-    developer_id INT NOT NULL,
     project_name VARCHAR(100) NOT NULL,
+    technologies_used VARCHAR(550),
     start_date DATE,
     end_date DATE,
     budget DECIMAL(10, 2),
     status ENUM('Pending', 'In Progress', 'Completed') DEFAULT 'Pending',
+    developer_id INT,
     FOREIGN KEY (developer_id) REFERENCES Developers(developer_id) ON DELETE CASCADE
 );

@@ -3,20 +3,18 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete User Confirmation</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <h1>Are you sure you want to delete this user?</h1>
 
     <?php
     if (isset($_GET['developer_id'])) {
-        $getDeveloperID = getDeveloperID($pdo, $_GET['developer_id']);
+        $getDeveloperID = getDeveloperById($pdo, $_GET['developer_id']); // Updated function name
     } else {
         die("Developer ID not provided.");
     }
@@ -36,5 +34,4 @@
         </div>
     </div>
 </body>
-
 </html>
