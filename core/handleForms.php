@@ -3,7 +3,6 @@
 require_once 'dbConfig.php';
 require_once 'models.php';
 
-// Insert Developer
 if (isset($_POST['insertDeveloperBtn'])) {
     if (isset($_POST['name'], $_POST['email'], $_POST['expertise'], $_POST['hourly_rate'])) {
         $query = insertDeveloper(
@@ -25,16 +24,15 @@ if (isset($_POST['insertDeveloperBtn'])) {
     }
 }
 
-// Edit Developer
 if (isset($_POST['editWebDevBtn'])) {
     if (isset($_POST['name'], $_POST['email'], $_POST['expertise'], $_POST['hourly_rate'], $_POST['developer_id'])) {
         $query = updateDeveloper(
             $pdo,
-            $_POST['name'], // Corrected from $_POST['name']
-            $_POST['email'],  // Corrected from $_POST['email']
+            $_POST['name'],
+            $_POST['email'], 
             $_POST['expertise'],
             $_POST['hourly_rate'],
-            $_POST['developer_id'] // This is now using the hidden field correctly
+            $_POST['developer_id'] 
         );
 
         if ($query) {
@@ -48,7 +46,6 @@ if (isset($_POST['editWebDevBtn'])) {
     }
 }
 
-// Delete Developer
 if (isset($_POST['deleteWebDevBtn'])) {
     if (isset($_GET['developer_id'])) {
         $query = deleteDeveloper($pdo, $_GET['developer_id']);
@@ -64,7 +61,6 @@ if (isset($_POST['deleteWebDevBtn'])) {
     }
 }
 
-// Insert New Project
 if (isset($_POST['insertNewProjectBtn'])) {
     if (isset($_POST['project_name'], $_POST['start_date'], $_POST['end_date'], $_POST['budget'], $_GET['developer_id'])) {
         $query = insertProject(
@@ -87,7 +83,6 @@ if (isset($_POST['insertNewProjectBtn'])) {
     }
 }
 
-// Edit Project
 if (isset($_POST['editProjectBtn'])) {
     if (isset($_POST['project_name'], $_POST['start_date'], $_POST['end_date'], $_POST['budget'], $_GET['project_id'])) {
         $query = updateProject(
@@ -97,7 +92,7 @@ if (isset($_POST['editProjectBtn'])) {
             $_POST['end_date'],
             $_POST['budget'],
             $_GET['project_id'],
-            $project_id // Add the missing $project_id argument
+            $project_id
         );
 
         if ($query) {
@@ -111,7 +106,6 @@ if (isset($_POST['editProjectBtn'])) {
     }
 }
 
-// Delete Project
 if (isset($_POST['deleteProjectBtn'])) {
     if (isset($_GET['project_id'], $_GET['developer_id'])) {
         $query = deleteProject($pdo, $_GET['project_id']);

@@ -15,11 +15,9 @@
     <h1>Are you sure you want to delete this user?</h1>
 
     <?php
-    // Fetch developer details by ID
     if (isset($_GET['developer_id'])) {
         $getDeveloperID = getDeveloperID($pdo, $_GET['developer_id']);
     } else {
-        // Handle the case where developer_id is not set
         die("Developer ID not provided.");
     }
     ?>

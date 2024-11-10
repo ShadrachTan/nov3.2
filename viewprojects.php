@@ -2,10 +2,8 @@
 require_once 'core/dbConfig.php';
 require_once 'core/models.php';
 
-// Get the developer ID (assuming it's set via a GET parameter or a predefined value)
 $developer_id = isset($_GET['developer_id']) ? $_GET['developer_id'] : null;
 
-// Fetch developer details
 $developer = getDeveloperById($pdo, $developer_id);
 ?>
 
@@ -22,7 +20,6 @@ $developer = getDeveloperById($pdo, $developer_id);
 <body>
 	<a href="index.php">Return to home</a>
 
-	<!-- Display the developer's name in an H1 -->
 	<?php if ($developer): ?>
 		<h1>Welcome, <?php echo htmlspecialchars($developer['name']); ?></h1>
 	<?php else: ?>

@@ -12,17 +12,15 @@
 
 <body>
 	<?php
-	// Fetch developer details by ID
 	if (isset($_GET['developer_id'])) {
 		$getDeveloperID = getDeveloperID($pdo, $_GET['developer_id']);
 	} else {
-		// Handle the case where developer_id is not set
 		die("Developer ID not provided.");
 	}
 	?>
 
 	<h1>Edit Developer</h1>
-	<form action="core/handleForms.php" method="POST"> <!-- Action points to handleForms.php -->
+	<form action="core/handleForms.php" method="POST">
 		<input type="hidden" name="developer_id" value="<?php echo $getDeveloperID['developer_id']; ?>">
 
 		<p>
